@@ -1,0 +1,10 @@
+-filter out dog samples from coyoteID 
+    use regular expressions
+Determine number of coyotes over 50 (not over 50 years old)
+subtract this number from 50
+
+randomly choose one LabID for each coyoteID selected 
+(this is the main goal of this entire thing)
+
+write the output into a .csv file 
+
