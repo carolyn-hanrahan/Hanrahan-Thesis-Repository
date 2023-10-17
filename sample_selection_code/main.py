@@ -12,13 +12,13 @@ LabID = df["LabID"].tolist()
 coyoteID = df["IndividualID"].tolist()
 isEqualLength = len(LabID) == len(coyoteID)
 
-print(isEqualLength)
+#print(isEqualLength)
 
 numSamples = len(LabID) 
 coyotes = {}
 
 for i in range(numSamples):
-    if pd.isna(coyoteID[i]):
+    if pd.isna(coyoteID[i]) or "dog" in coyoteID[i] or "RF" in coyoteID[i]:
         continue
 
     if coyoteID[i] in coyotes.keys():
@@ -26,11 +26,35 @@ for i in range(numSamples):
     else:
         coyotes[coyoteID[i]] = list([LabID[i]])
 
-#for key in coyotes.keys():
-    #print(f"{key}: {coyotes[key]}")
 
-numberToDelete = len(coyotes.keys()) - 50
+numberToDelete = (len(coyotes.keys()) - 50) if len(coyotes.keys()) > 50 else 0
 
-print(numberToDelete)
+for i in range(numberToDelete):
+    keyToDelete = random.choice(list(coyotes.keys()))
+    del coyotes[keyToDelete]
 
+#print(len(coyotes.keys()))
+
+# for key in coyotes.keys():
+#    print(f"{key}: {coyotes[key]}")
+
+selectedCoyotes = []
+selectedSamples = []
+
+for key in coyotes.keys():
+    selectedCoyotes.append(key)
+    selectedSamples.append(random.choice(coyotes[key]))
+
+df2 = pd.DataFrame({"CoyoteID" : selectedCoyotes, 
+                   "LabID" : selectedSamples})
+
+df3 = pd.DataFrame({"LabID" : selectedSamples})
+
+#print(df2)
+
+df2.to_csv('SelectedCoyotesAndSamples.csv', index=False)
+
+df3.to_csv('SelectedSamples.csv', index=False)
+
+print("Script ran successfullllyy!")
 
