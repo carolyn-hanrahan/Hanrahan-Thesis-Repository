@@ -27,11 +27,11 @@ for i in range(numSamples):
         coyotes[coyoteID[i]] = list([LabID[i]])
 
 
-numberToDelete = (len(coyotes.keys()) - 50) if len(coyotes.keys()) > 50 else 0
+# numberToDelete = (len(coyotes.keys()) - 50) if len(coyotes.keys()) > 50 else 0
 
-for i in range(numberToDelete):
-    keyToDelete = random.choice(list(coyotes.keys()))
-    del coyotes[keyToDelete]
+# for i in range(numberToDelete):
+#     keyToDelete = random.choice(list(coyotes.keys()))
+#     del coyotes[keyToDelete]
 
 #print(len(coyotes.keys()))
 
@@ -45,16 +45,20 @@ for key in coyotes.keys():
     selectedCoyotes.append(key)
     selectedSamples.append(random.choice(coyotes[key]))
 
-df2 = pd.DataFrame({"CoyoteID" : selectedCoyotes, 
-                   "LabID" : selectedSamples})
+#The below code is checking for duplicate values. 
+if len(selectedCoyotes) == len(set(selectedCoyotes)) and len(selectedSamples) == len(set(selectedSamples)):
 
-df3 = pd.DataFrame({"LabID" : selectedSamples})
+    df2 = pd.DataFrame({"CoyoteID" : selectedCoyotes, 
+                    "LabID" : selectedSamples})
 
-#print(df2)
+    df3 = pd.DataFrame({"LabID" : selectedSamples})
 
-df2.to_csv('SelectedCoyotesAndSamples.csv', index=False)
+    #print(df2)
 
-df3.to_csv('SelectedSamples.csv', index=False)
+    df2.to_csv('SelectedCoyotesAndSamples.csv', index=False)
 
-print("Script ran successfullllyy!")
+    df3.to_csv('SelectedSamples.csv', index=False)
 
+    print("Script ran successfullllyy!")
+else:
+    print('duplicates found')
